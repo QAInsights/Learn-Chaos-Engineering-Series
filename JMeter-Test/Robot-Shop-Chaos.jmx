@@ -648,7 +648,7 @@ vars.putObject(&quot;response&quot;,JsonOutput.toJson(json))
           </UniformRandomTimer>
           <hashTree/>
         </hashTree>
-        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="false">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
@@ -684,82 +684,6 @@ vars.putObject(&quot;response&quot;,JsonOutput.toJson(json))
           </objProp>
           <stringProp name="filename"></stringProp>
         </ResultCollector>
-        <hashTree/>
-        <com.github.johrstrom.listener.PrometheusListener guiclass="com.github.johrstrom.listener.gui.PrometheusListenerGui" testclass="com.github.johrstrom.listener.PrometheusListener" testname="Prometheus Listener" enabled="false">
-          <collectionProp name="prometheus.collector_definitions">
-            <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
-              <stringProp name="collector.help">default help string</stringProp>
-              <stringProp name="collector.metric_name">jmeter_connecttime</stringProp>
-              <stringProp name="collector.type">COUNTER</stringProp>
-              <collectionProp name="collector.labels"/>
-              <stringProp name="collector.quantiles_or_buckets"></stringProp>
-              <stringProp name="listener.collector.measuring">ConnectTime</stringProp>
-              <stringProp name="listener.collector.listen_to">samples</stringProp>
-            </elementProp>
-            <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
-              <stringProp name="collector.help">default help string</stringProp>
-              <stringProp name="collector.metric_name">jmeter_histogram</stringProp>
-              <stringProp name="collector.type">HISTOGRAM</stringProp>
-              <collectionProp name="collector.labels"/>
-              <stringProp name="collector.quantiles_or_buckets">100,500,1000,3000</stringProp>
-            </elementProp>
-            <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
-              <stringProp name="collector.help">default help string</stringProp>
-              <stringProp name="collector.metric_name">jmeter_rt_summary</stringProp>
-              <stringProp name="collector.type">SUMMARY</stringProp>
-              <collectionProp name="collector.labels"/>
-              <stringProp name="collector.quantiles_or_buckets">0.75,0.5|0.95,0.1|0.99,0.01</stringProp>
-            </elementProp>
-            <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
-              <stringProp name="collector.help">default help string</stringProp>
-              <stringProp name="collector.metric_name">jmeter_samples_latency_count</stringProp>
-              <stringProp name="collector.type">COUNTER</stringProp>
-              <collectionProp name="collector.labels"/>
-              <stringProp name="collector.quantiles_or_buckets"></stringProp>
-              <stringProp name="listener.collector.measuring">Latency</stringProp>
-            </elementProp>
-            <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
-              <stringProp name="collector.help">default help string</stringProp>
-              <stringProp name="collector.metric_name">jmeter_samples_latency_sum</stringProp>
-              <stringProp name="collector.type">SUMMARY</stringProp>
-              <collectionProp name="collector.labels"/>
-              <stringProp name="collector.quantiles_or_buckets">0.75,0.5|0.95,0.1|0.99,0.01</stringProp>
-              <stringProp name="listener.collector.measuring">Latency</stringProp>
-            </elementProp>
-            <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
-              <stringProp name="collector.help">default help string</stringProp>
-              <stringProp name="collector.metric_name">jmeter_fail_count</stringProp>
-              <stringProp name="collector.type">COUNTER</stringProp>
-              <collectionProp name="collector.labels"/>
-              <stringProp name="collector.quantiles_or_buckets"></stringProp>
-              <stringProp name="listener.collector.measuring">FailureTotal</stringProp>
-            </elementProp>
-            <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
-              <stringProp name="collector.help">default help string</stringProp>
-              <stringProp name="collector.metric_name">jmeter_pass_count</stringProp>
-              <stringProp name="collector.type">COUNTER</stringProp>
-              <collectionProp name="collector.labels"/>
-              <stringProp name="collector.quantiles_or_buckets"></stringProp>
-              <stringProp name="listener.collector.measuring">SuccessTotal</stringProp>
-            </elementProp>
-            <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
-              <stringProp name="collector.help">default help string</stringProp>
-              <stringProp name="collector.metric_name">jmeter_rt_sum</stringProp>
-              <stringProp name="collector.type">SUMMARY</stringProp>
-              <collectionProp name="collector.labels"/>
-              <stringProp name="collector.quantiles_or_buckets">0.75,0.5|0.95,0.1|0.99,0.01</stringProp>
-              <stringProp name="listener.collector.measuring">ResponseTime</stringProp>
-            </elementProp>
-            <elementProp name="" elementType="com.github.johrstrom.listener.ListenerCollectorConfig">
-              <stringProp name="collector.help">default help string</stringProp>
-              <stringProp name="collector.metric_name">jmeter_rt_count</stringProp>
-              <stringProp name="collector.type">COUNTER</stringProp>
-              <collectionProp name="collector.labels"/>
-              <stringProp name="collector.quantiles_or_buckets"></stringProp>
-              <stringProp name="listener.collector.measuring">ResponseTime</stringProp>
-            </elementProp>
-          </collectionProp>
-        </com.github.johrstrom.listener.PrometheusListener>
         <hashTree/>
         <BackendListener guiclass="BackendListenerGui" testclass="BackendListener" testname="Backend Listener" enabled="true">
           <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" enabled="true">
@@ -811,7 +735,7 @@ vars.putObject(&quot;response&quot;,JsonOutput.toJson(json))
               </elementProp>
               <elementProp name="influxdbToken" elementType="Argument">
                 <stringProp name="Argument.name">influxdbToken</stringProp>
-                <stringProp name="Argument.value">gf0Co5G51ir6zq1olGzQuBtVJ2b7_JEdckct5SsNxQdlu2Jv0NiletsFJe8R-OEQrMvzAm_nr97nVtwBZLV9CQ==</stringProp>
+                <stringProp name="Argument.value">${INFLUX_TOKEN}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
