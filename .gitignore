@@ -108,15 +108,15 @@ docs/site/
 
 # pytest results
 junit-test-results.xml
-experiment.log
-experiment.json
-experiment.yaml
-experiment.yml
-output.png
-chaos-report.json
-discovery.json
-journal.json
-chaostoolkit.log
+**/experiment.log
+**/experiment.json
+**/experiment.yaml
+**/experiment.yml
+**/output.png
+**/chaos-report.json
+**/discovery.json
+**/journal.json
+**/chaostoolkit.log
 .pytest_cache/
 
 # Misc from Mac OS
