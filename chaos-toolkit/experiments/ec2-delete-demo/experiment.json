@@ -1,0 +1,78 @@
+{
+    "title": "EC2 Delete",
+    "description": "N/A",
+    "tags": [],
+    "steady-state-hypothesis": {
+        "title": "Availability",
+        "probes": []
+    },
+    "configuration": {
+        "aws_region": "us-east-2"
+    },
+    "method": [        
+        {
+            "type": "action",
+            "name": "stop-an-ec2-instance",
+            "provider": {
+                "type": "python",
+                "module": "chaosaws.ec2.actions",
+                "func": "stop_instance",
+                "arguments": {
+                    "instance_id": "i-03097a9f6e8dfa772"
+                }
+            },
+            "pauses": {
+                "after": 20
+            }
+        },
+        {
+            "name": "detach-random-volume",
+            "type": "action",
+            "provider": {
+              "type": "python",
+              "module": "chaosaws.ec2.actions",
+              "func": "detach_random_volume",
+              "arguments": {
+                "instance_ids": ["i-03097a9f6e8dfa772"]
+             }
+            },
+            "pauses": {
+                "after": 20
+            }
+          },
+          {
+            "name": "start-instances",
+            "type": "action",
+            "provider": {
+              "type": "python",
+              "module": "chaosaws.ec2.actions",
+              "func": "start_instances",
+              "arguments": {
+                "instance_ids": ["i-03097a9f6e8dfa772"]
+            }
+            },
+            "pauses": {
+                "after": 30
+            }
+          },
+          {
+            "name": "attach-volume",
+            "type": "action",
+            "provider": {
+              "type": "python",
+              "module": "chaosaws.ec2.actions",
+              "func": "attach_volume",
+              "arguments": {
+                "instance_ids": ["i-03097a9f6e8dfa772"]
+             }
+            },
+            "pauses": {
+                "after": 10
+            }
+          }
+          
+          
+          
+        
+    ]
+}
