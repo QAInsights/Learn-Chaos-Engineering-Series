@@ -1,0 +1,9 @@
+{
+    "title": "Demo",
+    "description": "N/A",
+    "tags": [],
+    "steady-state-hypothesis": {
+        "title": "Service available for all users",
+        "probes": []
+    }
+}

@@ -23,7 +23,7 @@
     "method": [
         {
             "type": "action",
-            "name": "terminate-db-pod",
+            "name": "terminate-nginx-pod",
             "provider": {
                 "type": "python",
                 "module": "chaosk8s.pod.actions",

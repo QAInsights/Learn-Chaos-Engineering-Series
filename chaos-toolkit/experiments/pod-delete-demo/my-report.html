@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang xml:lang>
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="dcterms.date" content="2022-06-18" />
+  <title>Chaos Engineering Report</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <style type="text/css">html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}button{overflow:visible}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{height:auto}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}textarea{overflow:auto}optgroup{font-weight:700}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}</style>
+  <style type="text/css">
+html {
+color: #222;
+font-size: 1em;
+line-height: 1.4;
+}
+::-moz-selection {
+background: #b3d4fc;
+text-shadow: none;
+}
+::selection {
+background: #b3d4fc;
+text-shadow: none;
+}
+hr {
+display: block;
+height: 1px;
+border: 0;
+border-top: 1px solid #ccc;
+margin: 1em 0;
+padding: 0;
+}
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+vertical-align: middle;
+}
+fieldset {
+border: 0;
+margin: 0;
+padding: 0;
+}
+textarea {
+resize: vertical;
+}
+.browserupgrade {
+margin: 0.2em 0;
+background: #ccc;
+color: #000;
+padding: 0.2em 0;
+}
+
+
+@media only screen and (min-width: 35em) {
+}
+@media print,
+(-o-min-device-pixel-ratio: 5/4),
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 120dpi) {
+}
+
+.hidden {
+display: none !important;
+visibility: hidden;
+}
+.visuallyhidden {
+border: 0;
+clip: rect(0 0 0 0);
+height: 1px;
+margin: -1px;
+overflow: hidden;
+padding: 0;
+position: absolute;
+width: 1px;
+}
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+clip: auto;
+height: auto;
+margin: 0;
+overflow: visible;
+position: static;
+width: auto;
+}
+.invisible {
+visibility: hidden;
+}
+.clearfix:before,
+.clearfix:after {
+content: " ";
+display: table;
+}
+.clearfix:after {
+clear: both;
+}
+.clearfix {
+*zoom: 1;
+}
+
+@media print {
+*,
+*:before,
+*:after {
+background: transparent !important;
+color: #000 !important;
+box-shadow: none !important;
+text-shadow: none !important;
+}
+a,
+a:visited {
+text-decoration: underline;
+}
+a[href]:after {
+content: " (" attr(href) ")";
+}
+abbr[title]:after {
+content: " (" attr(title) ")";
+}
+a[href^="#"]:after,
+a[href^="javascript:"]:after {
+content: "";
+}
+pre,
+blockquote {
+border: 1px solid #999;
+page-break-inside: avoid;
+}
+thead {
+display: table-header-group;
+}
+tr,
+img {
+page-break-inside: avoid;
+}
+img {
+max-width: 100% !important;
+}
+p,
+h2,
+h3 {
+orphans: 3;
+widows: 3;
+}
+h2,
+h3 {
+page-break-after: avoid;
+}
+}</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Chaos Engineering Report</h1>
+<p class="date">18 June 2022</p>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#experiment">Experiment</a><ul>
+<li><a href="#do-we-remain-available-in-face-of-pod-going-down">Do we remain available in face of pod going down?</a><ul>
+<li><a href="#summary-1">Summary</a></li>
+<li><a href="#definition">Definition</a></li>
+<li><a href="#result">Result</a></li>
+<li><a href="#appendix">Appendix</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+
+<h1 id="summary">Summary</h1>
+<p>This report aggregates 1 experiments spanning over the following subjects:</p>
+<p><em>kubernetes</em></p>
+
+<h1 id="experiment">Experiment</h1>
+<h2 id="do-we-remain-available-in-face-of-pod-going-down">Do we remain available in face of pod going down?</h2>
+<p>We expect Kubernetes to handle the situation gracefully when a pod goes down</p>
+<h3 id="summary-1">Summary</h3>
+<p>Do we remain available in face of pod going down?</p>
+<p>We expect Kubernetes to handle the situation gracefully when a pod goes down</p>
+<table>
+<tbody>
+<tr class="odd">
+<td><strong>Status</strong></td>
+<td>completed</td>
+</tr>
+<tr class="even">
+<td><strong>Tagged</strong></td>
+<td>kubernetes</td>
+</tr>
+<tr class="odd">
+<td><strong>Executed From</strong></td>
+<td>LAPTOP-E7OUNN3B</td>
+</tr>
+<tr class="even">
+<td><strong>Platform</strong></td>
+<td>Linux-5.10.102.1-microsoft-standard-WSL2-x86_64-with-glibc2.29</td>
+</tr>
+<tr class="odd">
+<td><strong>Started</strong></td>
+<td>Sat, 18 Jun 2022 18:10:27 GMT</td>
+</tr>
+<tr class="even">
+<td><strong>Completed</strong></td>
+<td>Sat, 18 Jun 2022 18:10:39 GMT</td>
+</tr>
+<tr class="odd">
+<td><strong>Duration</strong></td>
+<td>12 seconds</td>
+</tr>
+</tbody>
+</table>
+<h3 id="definition">Definition</h3>
+<p>The experiment was made of 1 actions, to vary conditions in your system, and 0 probes, to collect objective data from your system during the experiment.</p>
+<h4 id="steady-state-hypothesis">Steady State Hypothesis</h4>
+<p>The steady state hypothesis this experiment tried was “<strong>Verifying service remains healthy</strong>”.</p>
+<h5 id="before-run">Before Run</h5>
+<p>The steady state was verified</p>
+<table>
+<thead>
+<tr class="header">
+<th>Probe</th>
+<th>Tolerance</th>
+<th>Verified</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>all-our-microservices-should-be-healthy</td>
+<td> True</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+<h5 id="after-run">After Run</h5>
+<p>The steady state was verified</p>
+<table>
+<thead>
+<tr class="header">
+<th>Probe</th>
+<th>Tolerance</th>
+<th>Verified</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>all-our-microservices-should-be-healthy</td>
+<td> True</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+<h4 id="method">Method</h4>
+<p>The experiment method defines the sequence of activities that help gathering evidence towards, or against, the hypothesis.</p>
+<p>The following activities were conducted as part of the experimental’s method:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Type</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>action</td>
+<td> terminate-nginx-pod</td>
+</tr>
+</tbody>
+</table>
+<h3 id="result">Result</h3>
+<p>The experiment was conducted on Sat, 18 Jun 2022 18:10:27 GMT and lasted roughly 12 seconds.</p>
+<h4 id="action---terminate-nginx-pod">Action - terminate-nginx-pod</h4>
+<table>
+<tbody>
+<tr class="odd">
+<td><strong>Status</strong></td>
+<td>succeeded</td>
+</tr>
+<tr class="even">
+<td><strong>Background</strong></td>
+<td>False</td>
+</tr>
+<tr class="odd">
+<td><strong>Started</strong></td>
+<td>Sat, 18 Jun 2022 18:10:28 GMT</td>
+</tr>
+<tr class="even">
+<td><strong>Ended</strong></td>
+<td>Sat, 18 Jun 2022 18:10:28 GMT</td>
+</tr>
+<tr class="odd">
+<td><strong>Duration</strong></td>
+<td>0 seconds</td>
+</tr>
+<tr class="even">
+<td><strong>Paused After</strong></td>
+<td>10s</td>
+</tr>
+</tbody>
+</table>
+<p>The action provider that was executed:</p>
+<table>
+<colgroup>
+<col style="width: 20%"></col>
+<col style="width: 79%"></col>
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Type</strong></td>
+<td>python</td>
+</tr>
+<tr class="even">
+<td><strong>Module</strong></td>
+<td>chaosk8s.pod.actions</td>
+</tr>
+<tr class="odd">
+<td><strong>Function</strong></td>
+<td>terminate_pods</td>
+</tr>
+<tr class="even">
+<td><strong>Arguments</strong></td>
+<td>{‘label_selector’: ‘app=nginx’, ‘name_pattern’: ’nginx-[0-9].*$‘, ’rand’: True}</td>
+</tr>
+</tbody>
+</table>
+<h3 id="appendix">Appendix</h3>
+<h4 id="action---terminate-nginx-pod-1">Action - terminate-nginx-pod</h4>
+<p>The <em>action</em> returned the following result:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1">[<span class="st">&#39;nginx-6799fc88d8-m9psr&#39;</span>]</a></code></pre></div>
+</body>
+</html>
