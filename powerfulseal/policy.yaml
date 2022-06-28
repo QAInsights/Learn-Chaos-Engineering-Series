@@ -1,0 +1,12 @@
+scenarios:
+- name: Hello chaos!
+  description: >
+    Verifies that after a pod is killed,
+    it's succesfully rescheduled after 30 seconds.
+  steps:
+  - podAction:
+      matches:
+        - namespace: kube-system
+      actions:
+        - checkPodState:
+            state: Running
