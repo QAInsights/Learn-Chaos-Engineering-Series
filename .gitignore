@@ -120,3 +120,6 @@ junit-test-results.xml
 
 # Pycharm
 .idea
+
+# k6
+xk6-chaos/k6
