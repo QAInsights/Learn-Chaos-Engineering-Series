@@ -2,8 +2,6 @@ import { Kubernetes } from 'k6/x/kubernetes';
 import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 import { sleep } from 'k6';
 
-const namespace = "default";
-
 export default function () {
 
   const kubernetesClient = new Kubernetes({
@@ -15,7 +13,7 @@ export default function () {
   // Print the number of pods
   console.log("The number of pods in " + options.namespace + " namespace is " + kubernetesClient.pods.list("default").length)  
 
-  // Killing a random pod
+  // Deleting a random pod
   let podsList = getPodNames("default", kubernetesClient)    
   const podName = podsList[Math.floor(Math.random() * kubernetesClient.pods.list("default").length)]
 
@@ -28,7 +26,7 @@ export default function () {
   
   sleep(5);
 
-  // Killing a deployment
+  // Deleting a deployment
   try {
     kubernetesClient.deployments.delete("nginx",options.namespace)
     console.log("Deployment has been killed successfully.");
@@ -38,7 +36,7 @@ export default function () {
   
   sleep(5);
 
-  // Killing a service
+  // Deleting a service
   try {
     kubernetesClient.services.delete("nginx", options.namespace)
     console.log("Service has been killed successfully.");    
